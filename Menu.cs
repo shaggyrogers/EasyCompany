@@ -64,7 +64,7 @@ namespace EasyCompany
     internal class Menu
     {
         // Size/position
-        private Rect rect = new Rect(10, 10, 128, 256);
+        private Rect rect = new Rect(10, 10, 260, 220);
 
         // Tabs
         private int selectedTabIdx = 0;

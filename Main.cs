@@ -7,6 +7,7 @@
 */
 
 using BepInEx;
+using BepInEx.Logging;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,77 +16,47 @@ namespace EasyCompany
     [BepInEx.BepInPlugin(PluginInfo.modGUID, PluginInfo.modName, PluginInfo.modVersion)]
     public class Main : BaseUnityPlugin
     {
-        private Menu menu;
+        private static Menu menu;
+        internal static ManualLogSource log;
 
         // Called on plugin load, initialises plugin.
         private void Awake()
         {
             Logger.LogInfo($"Initialising {PluginInfo.modName}...");
 
+            log = base.Logger;
+
             // UI set-up
             menu = new Menu();
 
-            // Placeholder items for testing
+            // Cheats
             menu.AddTab(
                 new MenuTab(
-                    "Test1",
+                    "Cheats",
                     new List<BaseMenuTabItem>()
                     {
-                        new ButtonMenuTabItem("Button1", () => {}),
-                        new ButtonMenuTabItem("Button2", () => {}),
-                        new ButtonMenuTabItem("Button3", () => {}),
-                        new ButtonMenuTabItem("Button4", () => {}),
-                        new ButtonMenuTabItem("Button5", () => {}),
-                        new ButtonMenuTabItem("Button6", () => {}),
-                        new ButtonMenuTabItem("Button7", () => {}),
-                        new ButtonMenuTabItem("Button8", () => {}),
-                        new ButtonMenuTabItem("Button9", () => {}),
-                        new ButtonMenuTabItem("Button10", () => {}),
-                        new ButtonMenuTabItem("Button11", () => {}),
-                        new ButtonMenuTabItem("Button12", () => {}),
-                        new ButtonMenuTabItem("Button13", () => {}),
+                        new ButtonMenuTabItem("Add $50", () => { Exploits.AddMoney(50); }),
+                        new ButtonMenuTabItem("Add $250", () => { Exploits.AddMoney(250); }),
+                        new ButtonMenuTabItem("TP Where Aiming", Exploits.TeleportWhereLooking),
+                        new ButtonMenuTabItem("Fix Nearest Steam Valve", Exploits.FixNearestValve),
+                        new ButtonMenuTabItem("Unlock Nearest Locked Door", Exploits.UnlockNearestLockedDoor),
+                        new ButtonMenuTabItem("Set Level To Intern", Exploits.SetPlayerLevelIntern),
+                        new ButtonMenuTabItem("Set Level To Boss", Exploits.SetPlayerLevelBoss),
                     }
                 )
             );
+
+            // Not much point to these other than messing with other players
             menu.AddTab(
                 new MenuTab(
-                    "Test2",
+                    "Griefing",
                     new List<BaseMenuTabItem>()
                     {
-                        new ButtonMenuTabItem("Button1", () => {}),
-                        new ButtonMenuTabItem("Button2", () => {}),
-                        new ButtonMenuTabItem("Button3", () => {}),
-                        new ButtonMenuTabItem("Button4", () => {}),
-                        new ButtonMenuTabItem("Button5", () => {}),
-                        new ButtonMenuTabItem("Button6", () => {}),
-                        new ButtonMenuTabItem("Button7", () => {}),
-                        new ButtonMenuTabItem("Button8", () => {}),
-                        new ButtonMenuTabItem("Button9", () => {}),
-                        new ButtonMenuTabItem("Button10", () => {}),
-                        new ButtonMenuTabItem("Button11", () => {}),
-                        new ButtonMenuTabItem("Button12", () => {}),
-                        new ButtonMenuTabItem("Button13", () => {}),
-                    }
-                )
-            );
-            menu.AddTab(
-                new MenuTab(
-                    "Test3",
-                    new List<BaseMenuTabItem>()
-                    {
-                        new ButtonMenuTabItem("Button1", () => {}),
-                        new ButtonMenuTabItem("Button2", () => {}),
-                        new ButtonMenuTabItem("Button3", () => {}),
-                        new ButtonMenuTabItem("Button4", () => {}),
-                        new ButtonMenuTabItem("Button5", () => {}),
-                        new ButtonMenuTabItem("Button6", () => {}),
-                        new ButtonMenuTabItem("Button7", () => {}),
-                        new ButtonMenuTabItem("Button8", () => {}),
-                        new ButtonMenuTabItem("Button9", () => {}),
-                        new ButtonMenuTabItem("Button10", () => {}),
-                        new ButtonMenuTabItem("Button11", () => {}),
-                        new ButtonMenuTabItem("Button12", () => {}),
-                        new ButtonMenuTabItem("Button13", () => {}),
+                        new ButtonMenuTabItem("Explode Nearest Mine", Exploits.ExplodeNearestMine),
+                        new ButtonMenuTabItem("Beserk Nearest Turret", Exploits.BeserkNearestTurret),
+                        new ButtonMenuTabItem("Toggle Ship Lights", Exploits.ToggleShipLights),
+                        new ButtonMenuTabItem("Trigger Player-Dropped Noisemakers", Exploits.TriggerDroppedNoisemakers),
+                        new ButtonMenuTabItem("Force Company Monster Attack", Exploits.TriggerCompanyDeskAttack),
                     }
                 )
             );
