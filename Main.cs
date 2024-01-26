@@ -27,7 +27,7 @@ namespace EasyCompany
             log = base.Logger;
 
             // UI set-up
-            menu = new Menu();
+            menu = new Menu($"{PluginInfo.modName} Menu");
 
             // Cheats
             menu.AddTab(
@@ -57,6 +57,21 @@ namespace EasyCompany
                         new ButtonMenuTabItem("Toggle Ship Lights", Exploits.ToggleShipLights),
                         new ButtonMenuTabItem("Trigger Player-Dropped Noisemakers", Exploits.TriggerDroppedNoisemakers),
                         new ButtonMenuTabItem("Force Company Monster Attack", Exploits.TriggerCompanyDeskAttack),
+                    }
+                )
+            );
+
+            // ESP menu (TODO!)
+            bool testBool1 = false;
+            bool testBool2 = true;
+
+            menu.AddTab(
+                new MenuTab(
+                    "ESP",
+                    new List<BaseMenuTabItem>()
+                    {
+                        new ToggleMenuTabItem("Test 1", () => testBool1, (bool newVal) => testBool1 = newVal),
+                        new ToggleMenuTabItem("Test 2", () => testBool2, (bool newVal) => testBool2 = newVal),
                     }
                 )
             );

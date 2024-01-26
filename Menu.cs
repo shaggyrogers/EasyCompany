@@ -33,6 +33,15 @@ namespace EasyCompany
     // Parent virtual class for elements inside a tab
     internal class BaseMenuTabItem
     {
+        // Label associated with the tab item
+        protected string label;
+
+        public BaseMenuTabItem(string label)
+        {
+            this.label = label;
+        }
+
+        // Draw the tab item. Implement in child classes
         public virtual void Draw()
         {
             throw new NotImplementedException("Must use child class");
@@ -42,12 +51,11 @@ namespace EasyCompany
     // Buttons
     internal class ButtonMenuTabItem : BaseMenuTabItem
     {
-        private string label;
+        // Called once when clicking the button
         private Action onClick;
 
-        public ButtonMenuTabItem(String label, Action onClick)
+        public ButtonMenuTabItem(String label, Action onClick) : base(label)
         {
-            this.label = label;
             this.onClick = onClick;
         }
 
@@ -60,9 +68,40 @@ namespace EasyCompany
         }
     }
 
+    // Toggle radio button
+    internal class ToggleMenuTabItem : BaseMenuTabItem
+    {
+        // Called to get the value of the toggle button
+        private Func<bool> getValueFn;
+
+        // Called when the value has changed. Must set the new value.
+        private Action<bool> setValueFn;
+
+        public ToggleMenuTabItem(String label, Func<bool> getValueFn, Action<bool> setValueFn) : base(label)
+        {
+            this.getValueFn = getValueFn;
+            this.setValueFn = setValueFn;
+        }
+
+        public override void Draw()
+        {
+            bool curVal = getValueFn();
+            bool newVal = GUILayout.Toggle(curVal, label);
+
+            //  Call setValueFn if toggle was clicked.
+            if (curVal != newVal)
+            {
+                setValueFn(newVal);
+            }
+        }
+    }
+
     // Interface for the UI
     internal class Menu
     {
+        // Title label
+        private String title;
+
         // Size/position
         private Rect rect = new Rect(10, 10, 260, 220);
 
@@ -70,8 +109,12 @@ namespace EasyCompany
         private int selectedTabIdx = 0;
         private List<MenuTab> tabs = new List<MenuTab>();
         
-        public Menu() { }
+        public Menu(string title) 
+        {
+            this.title = title;
+        }
 
+        // Inserts a new tab
         public void AddTab(MenuTab tab)
         {
             tabs.Add(tab);
@@ -81,9 +124,10 @@ namespace EasyCompany
         public void Draw()
         {
             // Background
-            rect = GUILayout.Window(1024, rect, DrawWindow, "Menu");
+            rect = GUILayout.Window(1024, rect, DrawWindow, title);
         }
 
+        // UI window draw function, called by IMGUI
         private void DrawWindow(int windowID)
         {
 
@@ -102,7 +146,8 @@ namespace EasyCompany
             GUILayout.EndVertical();
 
             // Drag window (call here so this only happens if no control is clicked)
-            // Alternatively could limit drag area to title bar
+            // Alternatively could limit drag area to title bar since it's a little annoying to misclick and
+            // accidentally drag the window.
             // see https://docs.unity3d.com/ScriptReference/GUI.DragWindow.html
             GUI.DragWindow();
         }
