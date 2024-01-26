@@ -9,6 +9,7 @@
 using BepInEx;
 using BepInEx.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace EasyCompany
@@ -18,6 +19,7 @@ namespace EasyCompany
     {
         private static Menu menu;
         internal static ManualLogSource log;
+        private ESP esp;
 
         // Called on plugin load, initialises plugin.
         private void Awake()
@@ -26,10 +28,13 @@ namespace EasyCompany
 
             log = base.Logger;
 
-            // UI set-up
+            // UI setup
             menu = new Menu($"{PluginInfo.modName} Menu");
 
-            // Cheats
+            // Cheat setup
+            esp = new ESP();
+
+            // Menu setup
             menu.AddTab(
                 new MenuTab(
                     "Cheats",
@@ -61,18 +66,17 @@ namespace EasyCompany
                 )
             );
 
-            // ESP menu (TODO!)
-            bool testBool1 = false;
-            bool testBool2 = true;
-
+            // ESP menu
             menu.AddTab(
                 new MenuTab(
                     "ESP",
-                    new List<BaseMenuTabItem>()
-                    {
-                        new ToggleMenuTabItem("Test 1", () => testBool1, (bool newVal) => testBool1 = newVal),
-                        new ToggleMenuTabItem("Test 2", () => testBool2, (bool newVal) => testBool2 = newVal),
-                    }
+                    esp.GetTargets().Select(
+                        target => new ToggleMenuTabItem(
+                            target.name,
+                            () => target.enabled,
+                            (bool enabled) => target.enabled = enabled
+                        )
+                    ).ToList<BaseMenuTabItem>()
                 )
             );
 
@@ -82,6 +86,7 @@ namespace EasyCompany
         // Called one or more times per frame.
         public void OnGUI()
         {
+            esp.Draw();
             menu.Draw();
         }
     }

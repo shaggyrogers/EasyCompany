@@ -74,7 +74,7 @@ namespace EasyCompany
         // Called to get the value of the toggle button
         private Func<bool> getValueFn;
 
-        // Called when the value has changed. Must set the new value.
+        // Called (once) when the value has changed. Must set the new value.
         private Action<bool> setValueFn;
 
         public ToggleMenuTabItem(String label, Func<bool> getValueFn, Action<bool> setValueFn) : base(label)
@@ -96,14 +96,14 @@ namespace EasyCompany
         }
     }
 
-    // Interface for the UI
+    // Interface class for the UI
     internal class Menu
     {
         // Title label
         private String title;
 
         // Size/position
-        private Rect rect = new Rect(10, 10, 260, 220);
+        private Rect rect = new Rect(10, 10, 260, 240);
 
         // Tabs
         private int selectedTabIdx = 0;
@@ -146,9 +146,10 @@ namespace EasyCompany
             GUILayout.EndVertical();
 
             // Drag window (call here so this only happens if no control is clicked)
-            // Alternatively could limit drag area to title bar since it's a little annoying to misclick and
+            // FIXME: Alternatively could limit drag area to title bar since it's a little annoying to misclick and
             // accidentally drag the window.
             // see https://docs.unity3d.com/ScriptReference/GUI.DragWindow.html
+            // FIXME: If loading into a game while dragging, window will disappear!
             GUI.DragWindow();
         }
     }

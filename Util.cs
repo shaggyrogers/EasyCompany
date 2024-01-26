@@ -45,7 +45,7 @@ namespace EasyCompany
 
         // Raycast from the player's position/camera rotation, stopping if a collision is found within maxDist units.
         // If a collision was found, returns true and sets hit to the location of the collision.
-        // FIXME: Seems slightly off?
+        // FIXME: Seems slightly off - will always hit the floor when looking below the horizon?
         public static bool RaycastFromPlayer(out UnityEngine.Vector3 hit, float maxDist = Mathf.Infinity)
         {
             // Ensure we can get player camera transform
