@@ -45,6 +45,7 @@ namespace EasyCompany
                         new ButtonMenuTabItem("TP Where Aiming", Exploits.TeleportWhereLooking),
                         new ButtonMenuTabItem("Fix Nearest Steam Valve", Exploits.FixNearestValve),
                         new ButtonMenuTabItem("Unlock Nearest Locked Door", Exploits.UnlockNearestLockedDoor),
+                        new ButtonMenuTabItem("Spawn 4xItem From Held Gift", () => Exploits.MultiGiftBoxSpawn(4)),
                         new ButtonMenuTabItem("Set Level To Intern", Exploits.SetPlayerLevelIntern),
                         new ButtonMenuTabItem("Set Level To Boss", Exploits.SetPlayerLevelBoss),
                     }
@@ -62,6 +63,7 @@ namespace EasyCompany
                         new ButtonMenuTabItem("Toggle Ship Lights", Exploits.ToggleShipLights),
                         new ButtonMenuTabItem("Trigger Player-Dropped Noisemakers", Exploits.TriggerDroppedNoisemakers),
                         new ButtonMenuTabItem("Force Company Monster Attack", Exploits.TriggerCompanyDeskAttack),
+                        new ButtonMenuTabItem("Spawn Mimic from Held Mask (Aim Pos)", Exploits.SpawnMimic),
                     }
                 )
             );

@@ -58,10 +58,12 @@ namespace EasyCompany
             }
 
             Transform camera = GameNetworkManager.Instance.localPlayerController.gameplayCamera.transform;
-            var ray = new Ray(camera.position, camera.forward);
-            RaycastHit rayHit;
 
             // Perform raycasting
+            // HACK: Shift camera position up when raycasting to give better result
+            var ray = new Ray(camera.position + Vector3.up * 0.5f, camera.forward);
+            RaycastHit rayHit;
+
             // NOTE: LayerMask taken from Turret.CheckForPlayersInLineOfSight()
             if (Physics.Raycast(ray, out rayHit, maxDist, 1051400, QueryTriggerInteraction.Ignore))
             {
