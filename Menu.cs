@@ -128,7 +128,7 @@ namespace EasyCompany
         private String title;
 
         // Size/position
-        private Rect rect = new Rect(10, 10, 260, 240);
+        private Rect rect = new Rect(10, 10, 280, 240);
 
         // Tabs
         private int selectedTabIdx = 0;

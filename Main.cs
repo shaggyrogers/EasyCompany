@@ -69,6 +69,8 @@ namespace EasyCompany
                         new ButtonMenuTabItem("Trigger Player-Dropped Noisemakers", Exploits.TriggerDroppedNoisemakers),
                         new ButtonMenuTabItem("Force Company Monster Attack", Exploits.TriggerCompanyDeskAttack),
                         new ButtonMenuTabItem("Spawn Mimic from Held Mask (Aim Pos)", Exploits.SpawnMimic),
+                        new ButtonMenuTabItem("Force Game Start", Exploits.ForceGameStart),
+                        new ButtonMenuTabItem("Force Game End", Exploits.ForceGameEnd),
                     }
                 )
             );
@@ -85,6 +87,20 @@ namespace EasyCompany
                         )
                     ).ToList<BaseMenuTabItem>()
                 )
+            );
+
+            // Testing menu
+            menu.AddTab(
+                new MenuTab(
+                    "Test",
+                    new List<BaseMenuTabItem>()
+                    {
+                        new ButtonMenuTabItem(
+                            "Submit Max Challenge Moon Score",
+                            async () => Exploits.ReallyGoodAtChallengeMoon()
+                        )
+                    }
+                )    
             );
 
             Logger.LogInfo($"Initialised {PluginInfo.modName}");

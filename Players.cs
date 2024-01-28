@@ -2,7 +2,7 @@
    Players.cs
    ==========
 
-   Description:           Provides features related to other players.
+   Description:           Provides the player menu features.
 
 */
 
@@ -64,12 +64,26 @@ namespace EasyCompany
                 playerMenuTitle,
                 players.Select(
                     p => new HContainerMenuTabItem(
-                        $"{p.name} [{p.health}%]",
-                        // TODO: kill button + any other player-specific stuff
+                        $"{p.playerUsername} [{p.health}%]",
                         new List<BaseMenuTabItem>()
+                        {
+                            new ButtonMenuTabItem("Kill", () => KillPlayer(p)),
+                            new ButtonMenuTabItem(
+                                "Drop Items",
+                                // This doesn't require ownership, for some reason
+                                () => p.DropAllHeldItemsServerRpc()
+                            ),
+                        }
                     )
                 ).ToList<BaseMenuTabItem>()
             );
+        }
+
+        // Kill a player
+        private void KillPlayer(PlayerControllerB target)
+        {
+            // Tell server player was hit by no one for 101 damage from below
+            target.DamagePlayerFromOtherClientServerRpc(101, Vector3.up, -1);
         }
     }
 }

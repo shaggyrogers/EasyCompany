@@ -21,6 +21,13 @@ All features should work for both client and host.
   - This includes horns, cash registers, hairdryers etc.
   - Only works if you dropped them, and will stop working if another player picks them up.
 * Force company monster to attack
+* Force game start/end
+* Submit highest possible score for current challenge moon
+
+**Players**
+* Kill (non-host) player
+* Force (non-host) player to drop all items
+* View player health
 
 **ESP**
 * Players
