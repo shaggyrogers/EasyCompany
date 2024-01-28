@@ -47,6 +47,9 @@ namespace EasyCompany
                 return;
             }
 
+            // Update ShipTeleporter object
+            teleporter = UnityEngine.Object.FindObjectOfType<ShipTeleporter>();
+
             // Update player list
             players = UnityEngine.Object.FindObjectsOfType<PlayerControllerB>().Where(
                 p => p.isPlayerControlled
@@ -75,8 +78,12 @@ namespace EasyCompany
                                 () => p.DropAllHeldItemsServerRpc()
                             ),
                             new ButtonMenuTabItem(
-                                "TP (Aim Pos)",
-                                () => TeleportPlayerAimPos(p)
+                                "TP",
+                                () => TeleportPlayerOrBodyAimPos(p)
+                            ),
+                            new ButtonMenuTabItem(
+                                "Body",
+                                () => TeleportPlayerOrBodyAimPos(p, true)
                             )
                         }
                     )
@@ -91,8 +98,9 @@ namespace EasyCompany
             target.DamagePlayerFromOtherClientServerRpc(101, Vector3.up, -1);
         }
 
-        // Teleport a player to local player's aim position
-        private void TeleportPlayerAimPos(PlayerControllerB target)
+        // Either teleport a player or spawn their body at the local player's aim position
+        // By default teleports player, otherwise spaws body if body is true
+        private void TeleportPlayerOrBodyAimPos(PlayerControllerB target, bool body = false)
         {
             // Need to have a ShipTeleporter or this doesn't work.
             if (teleporter == null)
@@ -103,11 +111,18 @@ namespace EasyCompany
             }
 
             // Get aim position
-            Vector3 aimPos; 
+            Vector3 aimPos;
 
             if (Util.RaycastFromPlayer(out aimPos))
             {
-                teleporter.TeleportPlayerOutServerRpc((int)target.playerClientId, aimPos);
+                if (body)
+                {
+                    teleporter.TeleportPlayerBodyOutServerRpc((int)target.playerClientId, aimPos);
+                }
+                else
+                {
+                    teleporter.TeleportPlayerOutServerRpc((int)target.playerClientId, aimPos);
+                }
             }
         }
     }
