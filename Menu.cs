@@ -128,15 +128,16 @@ namespace EasyCompany
         private String title;
 
         // Size/position
-        private Rect rect = new Rect(10, 10, 280, 240);
+        private Rect rect;
 
         // Tabs
         private int selectedTabIdx = 0;
         private List<MenuTab> tabs = new List<MenuTab>();
         
-        public Menu(string title) 
+        public Menu(string title, Rect rect) 
         {
             this.title = title;
+            this.rect = rect;
         }
 
         // Inserts a new tab

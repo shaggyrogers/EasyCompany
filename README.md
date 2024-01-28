@@ -22,12 +22,15 @@ All features should work for both client and host.
   - Only works if you dropped them, and will stop working if another player picks them up.
 * Force company monster to attack
 * Force game start/end
+  - Can start without being host, or end at any point after ship has landed
 * Submit highest possible score for current challenge moon
 
 **Players**
 * Kill (non-host) player
 * Force (non-host) player to drop all items
 * View player health
+* Teleport player to aim position`
+  - ***NOTE:*** Requires ship teleporter
 
 **ESP**
 * Players

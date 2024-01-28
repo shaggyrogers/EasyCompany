@@ -32,7 +32,7 @@ namespace EasyCompany
             log = base.Logger;
 
             // UI setup
-            menu = new Menu($"{PluginInfo.modName} Menu");
+            menu = new Menu($"{PluginInfo.modName} Menu", new Rect(10, 10, 320, 240));
 
             // Cheat setup
             esp = new ESP();

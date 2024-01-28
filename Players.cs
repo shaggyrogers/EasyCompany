@@ -18,6 +18,7 @@ namespace EasyCompany
     internal class Players
     {
         private PlayerControllerB[] players;
+        private ShipTeleporter teleporter;
 
         private float lastUpdateTime = 0f;
         private const float updateRate = 1f; // time between updates
@@ -73,6 +74,10 @@ namespace EasyCompany
                                 // This doesn't require ownership, for some reason
                                 () => p.DropAllHeldItemsServerRpc()
                             ),
+                            new ButtonMenuTabItem(
+                                "TP (Aim Pos)",
+                                () => TeleportPlayerAimPos(p)
+                            )
                         }
                     )
                 ).ToList<BaseMenuTabItem>()
@@ -84,6 +89,26 @@ namespace EasyCompany
         {
             // Tell server player was hit by no one for 101 damage from below
             target.DamagePlayerFromOtherClientServerRpc(101, Vector3.up, -1);
+        }
+
+        // Teleport a player to local player's aim position
+        private void TeleportPlayerAimPos(PlayerControllerB target)
+        {
+            // Need to have a ShipTeleporter or this doesn't work.
+            if (teleporter == null)
+            {
+                Main.log.LogWarning("TeleportPlayerAimPos called with null ShipTeleporter!");
+
+                return;
+            }
+
+            // Get aim position
+            Vector3 aimPos; 
+
+            if (Util.RaycastFromPlayer(out aimPos))
+            {
+                teleporter.TeleportPlayerOutServerRpc((int)target.playerClientId, aimPos);
+            }
         }
     }
 }
