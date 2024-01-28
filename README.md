@@ -52,3 +52,13 @@ All features should work for both client and host.
 
 **ESP**
 * Opened (invisible) gift boxes are shown as loot
+
+## Credits
+
+All code is my own.
+
+I used [notfishvr's mod menu](https://github.com/official-notfishvr/Lethal-Company-Mod-Menu) as reference during development.
+
+## License
+
+See LICENSE.md - please credit me if you use my code, but you don't have to.
