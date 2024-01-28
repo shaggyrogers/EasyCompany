@@ -66,6 +66,12 @@ namespace EasyCompany
                     continue;
                 }
 
+                // Don't draw dead or uncontrolled players
+                if (!player.isPlayerControlled || player.isPlayerDead)
+                {
+                    continue;
+                }
+
                 yield return new Tuple<String, Vector3>(player.playerUsername, player.playerGlobalHead.transform.position);
             }
         }

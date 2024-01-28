@@ -48,6 +48,31 @@ namespace EasyCompany
         }
     }
 
+    // Horizontal container
+    internal class HContainerMenuTabItem : BaseMenuTabItem
+    {
+        private List<BaseMenuTabItem> items;
+
+        // Only need this for player menu, which will always have player name as label.
+        public HContainerMenuTabItem(string label, List<BaseMenuTabItem> items) : base(label) 
+        {
+            this.items = items;
+        }
+
+        public override void Draw()
+        {
+            GUILayout.BeginHorizontal();
+
+            // Draw label
+            GUILayout.Label(label);
+
+            // Draw items
+            foreach (var item in items) { item.Draw(); }
+
+            GUILayout.EndHorizontal();
+        }
+    }
+
     // Buttons
     internal class ButtonMenuTabItem : BaseMenuTabItem
     {
@@ -117,6 +142,9 @@ namespace EasyCompany
         // Inserts a new tab
         public void AddTab(MenuTab tab)
         {
+            // Tab names must be unique
+            Debug.Assert(tabs.All(t => t.name != tab.name));
+
             tabs.Add(tab);
         }
 
@@ -125,6 +153,17 @@ namespace EasyCompany
         {
             // Background
             rect = GUILayout.Window(1024, rect, DrawWindow, title);
+        }
+
+        // Replace the contents of a tab by name
+        public void UpdateTab(String name, List<BaseMenuTabItem> newItems)
+        {
+            var tab = tabs.FirstOrDefault(t => t.name == name);
+
+            // Tab should exist
+            Debug.Assert(tab != null);
+
+            tab.items = newItems;
         }
 
         // UI window draw function, called by IMGUI

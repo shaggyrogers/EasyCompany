@@ -19,7 +19,10 @@ namespace EasyCompany
     {
         private static Menu menu;
         internal static ManualLogSource log;
+        
         private ESP esp;
+        private Players players;
+
 
         // Called on plugin load, initialises plugin.
         private void Awake()
@@ -33,6 +36,7 @@ namespace EasyCompany
 
             // Cheat setup
             esp = new ESP();
+            players = new Players(menu);
 
             // Menu setup
             menu.AddTab(
@@ -43,6 +47,7 @@ namespace EasyCompany
                         new ButtonMenuTabItem("Add $50", () => { Exploits.AddMoney(50); }),
                         new ButtonMenuTabItem("Add $250", () => { Exploits.AddMoney(250); }),
                         new ButtonMenuTabItem("TP Where Aiming", Exploits.TeleportWhereLooking),
+                        new ButtonMenuTabItem("TP To Ship", Exploits.TeleportToShip),
                         new ButtonMenuTabItem("Fix Nearest Steam Valve", Exploits.FixNearestValve),
                         new ButtonMenuTabItem("Unlock Nearest Locked Door", Exploits.UnlockNearestLockedDoor),
                         new ButtonMenuTabItem("Spawn 4xItem From Held Gift", () => Exploits.MultiGiftBoxSpawn(4)),
@@ -88,6 +93,7 @@ namespace EasyCompany
         // Called one or more times per frame.
         public void OnGUI()
         {
+            players.Update(menu);
             esp.Draw();
             menu.Draw();
         }

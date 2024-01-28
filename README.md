@@ -10,6 +10,7 @@ All features should work for both client and host.
 
 * Add money ($50/$250)
 * Teleport where aiming
+* Teleport to ship
 * Fix nearest leaking steam valve
 * Unlock nearest locked door
 * Set player level (boss/intern)
@@ -36,5 +37,4 @@ All features should work for both client and host.
 * UI can disappear if window is dragged during the loading screen
 
 **ESP**
-* Shows dead/disconnected players and ghost players for available lobby slots
 * Opened (invisible) gift boxes are shown as loot

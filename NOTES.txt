@@ -1,0 +1,4 @@
+## NOTES ##
+
+* Can probably use ShipTeleporter to teleport other players or spawn bodies arbitrarily
+* Can probably force game start or end using the ServerRpc methods in StartOfRound
