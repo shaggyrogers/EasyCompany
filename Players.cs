@@ -77,14 +77,6 @@ namespace EasyCompany
                                 // This doesn't require ownership, for some reason
                                 () => p.DropAllHeldItemsServerRpc()
                             ),
-                            new ButtonMenuTabItem(
-                                "TP",
-                                () => TeleportPlayerOrBodyAimPos(p)
-                            ),
-                            new ButtonMenuTabItem(
-                                "Body",
-                                () => TeleportPlayerOrBodyAimPos(p, true)
-                            )
                         }
                     )
                 ).ToList<BaseMenuTabItem>()
@@ -96,34 +88,6 @@ namespace EasyCompany
         {
             // Tell server player was hit by no one for 101 damage from below
             target.DamagePlayerFromOtherClientServerRpc(101, Vector3.up, -1);
-        }
-
-        // Either teleport a player or spawn their body at the local player's aim position
-        // By default teleports player, otherwise spaws body if body is true
-        private void TeleportPlayerOrBodyAimPos(PlayerControllerB target, bool body = false)
-        {
-            // Need to have a ShipTeleporter or this doesn't work.
-            if (teleporter == null)
-            {
-                Main.log.LogWarning("TeleportPlayerAimPos called with null ShipTeleporter!");
-
-                return;
-            }
-
-            // Get aim position
-            Vector3 aimPos;
-
-            if (Util.RaycastFromPlayer(out aimPos))
-            {
-                if (body)
-                {
-                    teleporter.TeleportPlayerBodyOutServerRpc((int)target.playerClientId, aimPos);
-                }
-                else
-                {
-                    teleporter.TeleportPlayerOutServerRpc((int)target.playerClientId, aimPos);
-                }
-            }
         }
     }
 }
