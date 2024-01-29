@@ -18,7 +18,6 @@ namespace EasyCompany
     internal class Players
     {
         private PlayerControllerB[] players;
-        private ShipTeleporter teleporter;
 
         private float lastUpdateTime = 0f;
         private const float updateRate = 1f; // time between updates
@@ -46,9 +45,6 @@ namespace EasyCompany
                 // Too soon
                 return;
             }
-
-            // Update ShipTeleporter object
-            teleporter = UnityEngine.Object.FindObjectOfType<ShipTeleporter>();
 
             // Update player list
             players = UnityEngine.Object.FindObjectsOfType<PlayerControllerB>().Where(

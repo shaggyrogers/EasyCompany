@@ -31,10 +31,6 @@ All features should work for both client and host.
 * Kill (non-host) player
 * Force (non-host) player to drop all items
 * View player health
-* Teleport player to aim position
-  - ***NOTE:*** Requires ship teleporter
-* Spawn player's body at aim position
-  - ***NOTE:*** Requires ship teleporter
 
 **ESP**
 * Players
